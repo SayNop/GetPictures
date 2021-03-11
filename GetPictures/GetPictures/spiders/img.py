@@ -11,7 +11,7 @@ class ImgSpider(scrapy.Spider):
 
     def parse(self, response):
         # //*[@id="imgList"]/ul/li[1]
-        page_urls = response.xpath('//*[@id="imgList"]/ul/li[1]/a/@href').extract()
+        page_urls = response.xpath('//*[@id="imgList"]/ul/li/a/@href').extract()
         for page_url in page_urls:
             page_url = response.urljoin(page_url)
             print(page_url)
@@ -29,14 +29,15 @@ class ImgSpider(scrapy.Spider):
         item['title'] = title
         item['img_url'] = img_url
         # 测试打印
-        print(item)
+        # print(item)
+        yield item
 
         # 翻页
         # /html/body/div[3]/div[2]/article/section[2]/div[8]/ul/li[8]/a
         page_next = response.xpath('//div[@class="pages"]//li/a[text()="下一页"]/@href').extract_first()
 
-        print(page_next)
-        print(type(page_next))
+        # print(page_next)
+        # print(type(page_next))
         if page_next is not None:
             page_next = response.urljoin(page_next)
             yield scrapy.Request(page_next, callback=self.img_parse)
