@@ -19,4 +19,6 @@ class ImgSpider(scrapy.Spider):
         # /html/body/div[3]/div[2]/article/section[1]/div[1]/h1
         title = response.xpath('//div[@class="ArticleH1"]//h1/text()').extract_first()
         title = re.sub('\d+/\d+', '', title).strip()
-        print(title)
+        # //*[@id="ArticlePicBox TXid43"]/p/img
+        img_url = response.xpath('//*[@id="ArticlePicBox TXid43"]/p/img/@src').extract_first()
+        print(title, img_url)
