@@ -1,6 +1,8 @@
 import re
 import scrapy
 
+from GetPictures.items import GetpicturesItem
+
 
 class ImgSpider(scrapy.Spider):
     name = 'img'
@@ -21,4 +23,9 @@ class ImgSpider(scrapy.Spider):
         title = re.sub('\d+/\d+', '', title).strip()
         # //*[@id="ArticlePicBox TXid43"]/p/img
         img_url = response.xpath('//*[@id="ArticlePicBox TXid43"]/p/img/@src').extract_first()
-        print(title, img_url)
+        # 数据建模
+        item = GetpicturesItem()
+        item['title'] = title
+        item['img_url'] = img_url
+        # 测试打印
+        print(item)

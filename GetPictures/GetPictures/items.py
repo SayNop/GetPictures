@@ -10,5 +10,5 @@ class GetpicturesItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     title = scrapy.Field()
-    img_urls = scrapy.Field()
+    img_url = scrapy.Field()
 
