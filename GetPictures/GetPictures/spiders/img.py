@@ -6,8 +6,8 @@ from GetPictures.items import GetpicturesItem
 
 class ImgSpider(scrapy.Spider):
     name = 'img'
-    allowed_domains = ['duotoo.com']
-    start_urls = ['https://www.duotoo.com/rentiyishu/']
+    allowed_domains = ['***']
+    start_urls = ['**********']
 
     def parse(self, response):
         # //*[@id="imgList"]/ul/li[1]
