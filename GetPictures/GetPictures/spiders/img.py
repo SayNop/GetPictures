@@ -6,29 +6,16 @@ from GetPictures.items import GetpicturesItem
 
 class ImgSpider(scrapy.Spider):
     name = 'img'
-    allowed_domains = ['********']
-    start_urls = ['*******************']
+    allowed_domains = ['***']
+    start_urls = ['**********']
 
     def parse(self, response):
         # //*[@id="imgList"]/ul/li[1]
-        nodes = response.xpath('//*[@id="imgList"]/ul/li/a')
-        for node in nodes:
-            page_url = node.xpath('./@href').extract_first()
-            abtitle = node.xpath('./@title').extract_first().strip()
-
+        page_urls = response.xpath('//*[@id="imgList"]/ul/li/a/@href').extract()
+        for page_url in page_urls:
             page_url = response.urljoin(page_url)
-            # 此处填入指定女生名可下载对应的图片
-            if bool(re.match(r'^(.*?)女生名(.*?)$', abtitle)):
-                print(abtitle)
-                print(page_url)
-                yield scrapy.Request(page_url, callback=self.img_parse, dont_filter=True)
-
-        # //div[@class="pages"]//span[@class="pageinfo"]/a[]
-        page_next = response.xpath('//div[@class="pages"]//a[text()="下一页"]/@href').extract_first()
-        if page_next is not None:
-            page_next = response.urljoin(page_next)
-            yield scrapy.Request(page_next, callback=self.parse)
-
+            print(page_url)
+            yield scrapy.Request(page_url, callback=self.img_parse, dont_filter=True)
 
     def img_parse(self, response):
         # /html/body/div[3]/div[2]/article/section[1]/div[1]/h1
